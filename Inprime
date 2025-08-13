@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ht">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Lojitek · Fich Enprime</title>
+<style>
+  :root { --ink:#111; --muted:#555; --line:#999; }
+  * { box-sizing: border-box }
+  body { margin: 0; font-family: Georgia, 'Times New Roman', serif; color: var(--ink); background:#fff; }
+  .sheet { width: 80mm; margin: 0 auto; padding: 8mm 6mm; background: #fff; }
+  .hd { text-align:center; }
+  .hd h1 { font-size: 18px; margin: 4px 0 0 0; }
+  .muted { color: var(--muted); font-size: 12px; }
+  hr { border: 0; border-top: 1px dotted var(--line); margin: 8px 0; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th, td { text-align: left; padding: 6px 2px; }
+  th { border-bottom: 1px dotted var(--line); }
+  tfoot td { border-top: 1px dotted var(--line); font-weight: bold; }
+  .mono { font-family: ui-monospace, Consolas, monospace; }
+  .toolbar { display: flex; gap: 8px; justify-content: center; margin: 10px 0; }
+  .btn { padding: 8px 12px; border: 1px solid #222; background: #fff; cursor: pointer; border-radius: 6px; }
+  @media print { .toolbar { display: none } }
+</style>
+</head>
+<body>
+<div class="sheet" id="ticket">
+  <div class="hd">
+    <!-- Si vle mete logo, ajoute <img src="URL_LOGO" style="height:36px" alt="logo"> -->
+    <h1 id="tTitle">Lojitek Center</h1>
+    <div class="muted" id="tAddr"></div>
+    <div class="muted">Tel: <span id="tTel"></span></div>
+    <hr/>
+  </div>
+
+  <div style="font-size:13px; line-height:1.5">
+    <div>Dat: <span id="tDate"></span></div>
+    <div>Tike #: <span class="mono" id="tTike"></span></div>
+    <div>Bank: <span id="tBank"></span></div>
+    <div><strong>Tiraj:</strong> <span id="tTiraj"></span></div>
+  </div>
+
+  <table style="margin-top:8px">
+    <thead><tr><th>Jwet</th><th>Boul</th><th>Opsyon</th><th style="text-align:right">Miz</th></tr></thead>
+    <tbody id="tBody"></tbody>
+    <tfoot>
+      <tr><td colspan="3">Total Boul <span id="tBoul">0</span></td><td style="text-align:right">Total Miz <span id="tMiz">0</span> HTG</td></tr>
+    </tfoot>
+  </table>
+
+  <hr/>
+  <div class="muted" style="text-align:center;font-size:11px">
+    Mèsi! — Fich sa a se prèv tranzaksyon ou.
+  </div>
+</div>
+
+<div class="toolbar">
+  <button class="btn" onclick="window.print()">🖨️ Enprime</button>
+  <button class="btn" onclick="doShare()">📤 Share</button>
+</div>
+
+<script>
+  function qs(k, d='') {
+    const u = new URL(window.location.href);
+    return u.searchParams.get(k) || d;
+  }
+  function money(x) { return (Number(x)||0).toLocaleString('ht-HT'); }
+
+  // Ranpli tèt
+  document.getElementById('tTitle').textContent = qs('title','Lojitek Center');
+  document.getElementById('tAddr').textContent  = qs('addr','#50 Thomassin 35 Rt Kenscoff');
+  document.getElementById('tTel').textContent   = qs('tel','54567788643');
+  document.getElementById('tDate').textContent  = qs('date', new Date().toLocaleString());
+  document.getElementById('tTike').textContent  = qs('tike','LJ-00000000');
+  document.getElementById('tBank').textContent  = qs('bank','Adm80');
+  document.getElementById('tTiraj').textContent = qs('tiraj','Nwe-York 02:30PM');
+
+  // Liy yo: "Bolet|35|ops|100;Bolet|63|ops|100"
+  const rows = (qs('rows','')||'').split(';').filter(Boolean).map(r => r.split('|'));
+  let total = 0;
+  const tb = document.getElementById('tBody');
+  rows.forEach(r => {
+    const miz = Number(r[3]||0);
+    total += miz;
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td>${r[0]||''}</td><td class="mono">${r[1]||''}</td><td>${r[2]||''}</td><td class="mono" style="text-align:right">${money(miz)}</td>`;
+    tb.appendChild(tr);
+  });
+  document.getElementById('tBoul').textContent = rows.length;
+  document.getElementById('tMiz').textContent  = money(total);
+
+  // Share inifye (share sheet; fallback WhatsApp -> mailto)
+  async function doShare(){
+    const title = document.getElementById('tTitle').textContent || 'Fich Lotri';
+    let text = `**${title}**%0A`+
+               `Dat: ${document.getElementById('tDate').textContent}%0A`+
+               `Tike: ${document.getElementById('tTike').textContent}%0A`+
+               `Bank: ${document.getElementById('tBank').textContent}%0A`+
+               `Tiraj: ${document.getElementById('tTiraj').textContent}%0A`;
+    [...document.querySelectorAll('#tBody tr')].forEach(tr=>{
+      const c=tr.children;
+      text += `- ${c[0].textContent} | ${c[1].textContent} | ${c[2].textContent} | ${c[3].textContent} HTG%0A`;
+    });
+    text += `Total: ${document.getElementById('tMiz').textContent} HTG`;
+    if (navigator.share){
+      try { await navigator.share({ title, text: text.replace(/\*\*/g,'') }); return; } catch(e){}
+    }
+    try { window.open('https://wa.me/?text='+text, '_blank'); return; } catch(e){}
+    window.location.href = 'mailto:?subject=' + encodeURIComponent(title) + '&body=' + text;
+  }
+</script>
+</body>
+</html>
