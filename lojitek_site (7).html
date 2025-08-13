@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="ht">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Update: remove 'IT' from title -->
+  <title>Lojitek - Sistèm pou Lwe ak Vann</title>
+  <style>
+    /* Simple reset */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      background-color: #f5f5f5;
+      color: #333;
+    }
+
+    header {
+      background-color: #0a2d55;
+      color: #fff;
+      padding: 20px;
+      text-align: center;
+    }
+
+    header h1 {
+      font-size: 2rem;
+      margin-bottom: 5px;
+    }
+
+    header p {
+      font-size: 1rem;
+    }
+
+    nav {
+      background-color: #0a2d55;
+      overflow: hidden;
+    }
+
+    nav a {
+      float: left;
+      display: block;
+      color: #fff;
+      text-align: center;
+      padding: 14px 16px;
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: background 0.3s;
+    }
+
+    nav a:hover {
+      background-color: #062046;
+    }
+
+    .container {
+      width: 90%;
+      max-width: 1200px;
+      margin: 20px auto;
+    }
+
+    .section {
+      margin-bottom: 40px;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .section h2 {
+      margin-bottom: 10px;
+      color: #0a2d55;
+    }
+
+    .section p {
+      margin-bottom: 20px;
+    }
+
+    .button-group {
+      margin-top: 20px;
+      display: flex;
+      gap: 10px;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: #0a2d55;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.3s;
+    }
+
+    .btn:hover {
+      background-color: #062046;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    form label {
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    form input, form select, form textarea {
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    footer {
+      background-color: #0a2d55;
+      color: #fff;
+      text-align: center;
+      padding: 10px 0;
+      font-size: 0.8rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Lojitek</h1>
+    <!-- Updated slogan -->
+    <p>Lojitek se lavni biznis ou</p>
+  </header>
+  <nav>
+    <a href="#home">Akèy</a>
+    <a href="#services">Sèvis</a>
+    <a href="#rent">Lwe Sistèm</a>
+    <a href="#buy">Achte Sistèm</a>
+    <a href="#payment">Peman</a>
+    <a href="#app">Aplikasyon</a>
+    <a href="#contact">Kontak</a>
+  </nav>
+  <!-- Language translate button -->
+  <div id="google_translate_element" style="float:right; margin: 10px 16px;"></div>
+  <div class="container">
+    <!-- Akèy -->
+    <section id="home" class="section">
+      <h2>Byenveni nan Lojitek</h2>
+      <p>
+        Nou se founisè konplè nan solisyon enfomatik: ou ka
+        <strong>lwe</strong> oswa <strong>achte</strong> sistèm ki adapte a bezwen ou. Nou ofri bonjan sèvis pou
+        konpayi ak moun ki bezwen ekipman pou pwojè yo.
+      </p>
+      <div class="button-group">
+        <a href="#rent" class="btn">Lwe kounye a</a>
+        <a href="#buy" class="btn">Achte kounye a</a>
+      </div>
+    </section>
+    <!-- Sèvis -->
+    <section id="services" class="section">
+      <h2>Sèvis nou yo</h2>
+      <p>
+        Lojitek ofri divès kategori solisyon pou satisfè bezwen ou:
+      </p>
+      <ul>
+        <li><strong>Lwe Sistèm:</strong> laptop, serveurs, router ak plis ankò.</li>
+        <li><strong>Achte Sistèm:</strong> nouvo oswa itilize ekipman an gwo oubyen an detay.</li>
+        <li><strong>Support teknik:</strong> ekip nou an disponib pou sipò teknik epi konsèy.</li>
+      </ul>
+    </section>
+    <!-- Lwe -->
+    <section id="rent" class="section">
+      <h2>Lwe yon Sistèm</h2>
+      <p>
+        Ranpli fòm ki anba a pou mande ekipman ou bezwen an. N ap kontakte ou vit pou ofri
+        disponiblite ak pri.
+      </p>
+      <form>
+        <label for="name">Non ou:</label>
+        <input type="text" id="name" name="name" placeholder="Antre non ou" required>
+
+        <label for="email">Imèl ou:</label>
+        <input type="email" id="email" name="email" placeholder="Antre imèl ou" required>
+
+        <label for="system">Sistèm ou bezwen:</label>
+        <textarea id="system" name="system" rows="4" placeholder="Dekri ekipman ou bezwen" required></textarea>
+
+        <label for="duration">Kòman longe tan ou bezwen li:</label>
+        <select id="duration" name="duration" required>
+          <option value="1jou">1 jou</option>
+          <option value="1semen">1 semèn</option>
+          <option value="1mwa">1 mwa</option>
+          <option value="lot">Lòt (deklare nan deskripsyon an)</option>
+        </select>
+
+        <label for="paymentRent">Metòd Peman:</label>
+        <select id="paymentRent" name="paymentRent" required>
+          <option value="zelle">Zelle</option>
+          <option value="cashapp">Cash App</option>
+          <option value="paypal">PayPal</option>
+          <option value="moncash">MonCash</option>
+          <option value="natcash">NatCash</option>
+          <option value="lot">Lòt</option>
+        </select>
+
+        <button type="submit" class="btn">Voye demann</button>
+      </form>
+    </section>
+    <!-- Achte -->
+    <section id="buy" class="section">
+      <h2>Achte yon Sistèm</h2>
+      <p>
+        Chwazi kategori sistèm ou vle achte. Ranpli fòm lan, epi nou va kontakte ou.
+      </p>
+      <form>
+        <label for="nameBuy">Non ou:</label>
+        <input type="text" id="nameBuy" name="nameBuy" placeholder="Antre non ou" required>
+
+        <label for="emailBuy">Imèl ou:</label>
+        <input type="email" id="emailBuy" name="emailBuy" placeholder="Antre imèl ou" required>
+
+        <label for="category">Kategori ekipman:</label>
+        <select id="category" name="category" required>
+          <option value="laptop">Laptop</option>
+          <option value="serveur">Serveur</option>
+          <option value="router">Router</option>
+          <option value="lot">Lòt</option>
+        </select>
+
+        <label for="quantity">Kantite:</label>
+        <input type="number" id="quantity" name="quantity" min="1" required>
+
+        <label for="paymentBuy">Metòd Peman:</label>
+        <select id="paymentBuy" name="paymentBuy" required>
+          <option value="zelle">Zelle</option>
+          <option value="cashapp">Cash App</option>
+          <option value="paypal">PayPal</option>
+          <option value="moncash">MonCash</option>
+          <option value="natcash">NatCash</option>
+          <option value="lot">Lòt</option>
+        </select>
+
+        <button type="submit" class="btn">Voye demann</button>
+      </form>
+    </section>
+    <!-- Peman -->
+    <section id="payment" class="section">
+      <h2>Metòd Peman</h2>
+      <p>Nou aksepte divès metòd peman pou asire fleksibilite:</p>
+      <ul>
+        <li><strong>Zelle:</strong> Voye peman an dirèkteman nan kont bank nou via Zelle.</li>
+        <li><strong>Cash App:</strong> Yo ka peye ak Cash App avèk $Lojitek.</li>
+        <li><strong>PayPal:</strong> Nou pran PayPal pou tranzaksyon rapid ak san danje.</li>
+        <li><strong>MonCash:</strong> Metòd mobil popilè ann Ayiti pou peye fasil.</li>
+        <li><strong>NatCash:</strong> Yon lòt opsyon peman lokal.</li>
+        <li><strong>Lòt metòd:</strong> Kontakte nou pou lòt opsyon posib.</li>
+      </ul>
+    </section>
+    <!-- Aplikasyon -->
+    <section id="app" class="section">
+      <h2>Aplikasyon Mobil Lojitek</h2>
+      <!-- App information: updated description -->
+      <p>Nou gen yon App Mobil pou Lotrie. Telechaje oswa ouvè app mobil ofisyèl nou an pou yon eksperyans pi fasil lè w ap fè demann pou lwe oswa achte. App la pèmèt kliyan fè demann dirèk epi swiv estati yo.</p>
+      <div class="button-group">
+        <a href="#" class="btn">Telechaje App</a>
+      </div>
+    </section>
+    <!-- Kontak -->
+    <section id="contact" class="section">
+      <h2>Kontak</h2>
+      <p>Ou gen kesyon oswa bezwen asistans? Kontakte nou:</p>
+      <ul>
+        <li><strong>Imèl:</strong> info@lojitek.com</li>
+        <li><strong>WhatsApp:</strong> +1 (555) 123‑4567</li>
+        <li><strong>Adrès:</strong> 123 Tech Avenue, Fort Pierce, Florida</li>
+      </ul>
+    </section>
+  </div>
+  <footer>
+    &copy; 2025 Lojitek. Tout dwa rezève.
+  </footer>
+
+  <!-- Google translate widget script -->
+  <script type="text/javascript">
+    function googleTranslateElementInit() {
+      new google.translate.TranslateElement({pageLanguage: 'ht', includedLanguages: 'fr,en'}, 'google_translate_element');
+    }
+  </script>
+  <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+</body>
+</html>
