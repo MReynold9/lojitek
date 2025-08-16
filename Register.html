@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="ht">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Enskri · Lojitek</title>
+  <link rel="icon" href="assets/logo.png">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .form{max-width:720px;margin:24px auto}
+    .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+    @media(max-width:780px){.grid-2{grid-template-columns:1fr}}
+    .hint{font-size:.9rem;color:#566}
+    .success,.error{display:none;margin-top:12px;padding:12px 14px;border-radius:10px}
+    .success{background:#ecfdf5;border:1px solid #10b98133;color:#064e3b}
+    .error{background:#fef2f2;border:1px solid #ef444433;color:#7f1d1d}
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="container inner">
+      <div class="brand">
+        <a href="index.html" class="name" style="display:flex;gap:8px;align-items:center;text-decoration:none;color:inherit">
+          <img src="assets/logo.png" alt="Lojitek logo" style="height:28px;width:auto;border-radius:8px">
+          <strong>LOJITEK</strong>
+        </a>
+      </div>
+      <div class="links">
+        <a href="index.html#home">Akèy</a>
+        <a href="index.html#services">Sèvis</a>
+        <a href="index.html#rent">Lwe</a>
+        <a href="index.html#app">App mobil</a>
+        <a href="index.html#contact">Kontak</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="container">
+      <h1 class="h">Paj Enskripsyon</h1>
+      <p>Ranpli fòm nan egzakteman jan modèl la ye; lè ou soumèt, li voye dirèk nan baz done Adalo a.</p>
+    </div>
+  </header>
+
+  <section class="section">
+    <div class="container">
+      <div class="card form">
+
+        <!-- 0) Foto / Logo -->
+        <div>
+          <label>Chwazi foto / logo (opsyonèl)</label>
+          <input class="input" id="photo" type="file" accept="image/*">
+        </div>
+
+        <!-- 1) Email & Password -->
+        <div class="grid-2" style="margin-top:8px">
+          <div>
+            <label>Imèl</label>
+            <input class="input" id="email" type="email" placeholder="ou@lojitek.com" required>
+          </div>
+          <div>
+            <label>Modpas</label>
+            <input class="input" id="password" type="password" placeholder="********" required>
+          </div>
+        </div>
+
+        <!-- 2) ID & Full Name -->
+        <div class="grid-2" style="margin-top:8px">
+          <div>
+            <label>Nimewo Idantite</label>
+            <input class="input" id="id_number" placeholder="Antre nimewo idantite..." required>
+          </div>
+          <div>
+            <label>Non Konplè</label>
+            <input class="input" id="full_name" placeholder="Eg. Jean Pierre" required>
+          </div>
+        </div>
+
+        <!-- 3) Phone & Address -->
+        <div class="grid-2" style="margin-top:8px">
+          <div>
+            <label>Telefòn</label>
+            <input class="input" id="phone" placeholder="+1 772-475-5207" required>
+          </div>
+          <div>
+            <label>Adrès</label>
+            <input class="input" id="address" placeholder="Antre adrès..." required>
+          </div>
+        </div>
+
+        <!-- 4) Terms -->
+        <div style="margin-top:12px;display:flex;gap:8px;align-items:center">
+          <input id="terms" type="checkbox">
+          <label for="terms" class="small">Depi'w klike la, ou aksepte Tèm ak Kondisyon nou yo.</label>
+        </div>
+
+        <!-- Actions -->
+        <div style="margin-top:12px;display:flex;gap:10px;flex-wrap:wrap">
+          <button class="btn" id="btnSubmit">Enskri</button>
+          <button class="btn ghost" id="btnDelete" type="button">Siprime</button>
+          <span class="hint">Entegrasyon Adalo aktive: fòm sa a ap kreye itilizatè a nan baz done app ou.</span>
+        </div>
+
+        <div class="success" id="okBox">✅ Enskripsyon an voye.</div>
+        <div class="error" id="errBox">❌ Ranpli tout chan yo epi tcheke Tèm yo.</div>
+        <div class="error" id="errSrv" style="display:none">⚠️ Te gen yon erè rezo. Tcheke koneksyon oswa kle API yo.</div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container" style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap">
+      <div class="brand" style="gap:8px">
+        <img src="assets/logo.png" alt="logo" style="height:24px">
+        <strong>LOJITEK</strong>
+      </div>
+      <div class="small">© Lojitek. Tout dwa rezève.</div>
+      <div><a class="small" href="tools/lojitek_ticket_print.html">Ticket Print Tool</a></div>
+    </div>
+  </footer>
+
+  <script>
+    // 🔧 CONFIG — Ranpli sa yo (Adalo > Database > API Docs)
+    const ADALO_APP_ID = "<APP_ID>";
+    const USERS_COLLECTION_ID = "<USERS_COLLECTION_ID>";
+    const API_KEY = "<API_KEY>";
+    // (Si CORS) mete yon proxy: eg. Netlify/Cloudflare
+    const PROXY_URL = ""; // "https://proxy-domen-ou/adalo"
+
+    function endpoint(collectionId){
+      return `https://api.adalo.com/v0/apps/${ADALO_APP_ID}/collections/${collectionId}/records`;
+    }
+    async function postJSON(url, data){
+      const headers = { "Content-Type":"application/json", "Authorization": `Bearer ${API_KEY}` };
+      const res = await fetch(url, { method:"POST", headers, body: JSON.stringify(data) });
+      if(!res.ok){ throw new Error(await res.text()); }
+      return res.json();
+    }
+    function valid(){
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value.trim();
+      const idn = document.getElementById('id_number').value.trim();
+      const full = document.getElementById('full_name').value.trim();
+      const phone = document.getElementById('phone').value.trim();
+      const address = document.getElementById('address').value.trim();
+      const terms = document.getElementById('terms').checked;
+      return email && password && idn && full && phone && address && terms;
+    }
+    async function readPhotoAsDataURL(file){
+      return new Promise((resolve,reject)=>{
+        const fr = new FileReader();
+        fr.onload = () => resolve(fr.result);
+        fr.onerror = reject;
+        fr.readAsDataURL(file);
+      });
+    }
+    document.getElementById('btnDelete').addEventListener('click', () => {
+      ["photo","email","password","id_number","full_name","phone","address"].forEach(id=>{
+        const el = document.getElementById(id);
+        if(el){ if(el.type==="file"){ el.value=null; } else { el.value=""; } }
+      });
+      document.getElementById('terms').checked = false;
+      document.getElementById('okBox').style.display = 'none';
+      document.getElementById('errBox').style.display = 'none';
+      document.getElementById('errSrv').style.display = 'none';
+    });
+    document.getElementById('btnSubmit').addEventListener('click', async () => {
+      document.getElementById('okBox').style.display = 'none';
+      document.getElementById('errBox').style.display = 'none';
+      document.getElementById('errSrv').style.display = 'none';
+      if(!valid()){
+        document.getElementById('errBox').style.display = 'block';
+        return;
+      }
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value.trim();
+      const id_number = document.getElementById('id_number').value.trim();
+      const full_name = document.getElementById('full_name').value.trim();
+      const phone = document.getElementById('phone').value.trim();
+      const address = document.getElementById('address').value.trim();
+      let logo = "";
+      const file = document.getElementById('photo').files[0];
+      if(file){ logo = await readPhotoAsDataURL(file); }
+      const payload = {
+        email, password, id_number, full_name, phone, address, terms_accepted: true,
+        ...(logo ? { logo } : {}),
+        source: "web"
+      };
+      try{
+        const url = PROXY_URL ? PROXY_URL : endpoint(USERS_COLLECTION_ID);
+        await postJSON(url, payload);
+        document.getElementById('okBox').style.display = 'block';
+      }catch(err){
+        console.error(err);
+        document.getElementById('errSrv').style.display = 'block';
+      }
+    });
+  </script>
+</body>
+</html>
