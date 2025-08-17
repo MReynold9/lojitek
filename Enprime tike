@@ -1,0 +1,12 @@
+https://<VOTREPO>.github.io/lojitek_site/lojitek_ticket_print.html
+  ?title={[Current User > VendorProfile > business_name]}
+  &logo={[Current User > VendorProfile > logo_image]}
+  &addr={[Current User > VendorProfile > address]}
+  &tel={[Current User > VendorProfile > phone]}
+  &date={[Current Time]}
+  &tike={[Current Slip > code]}
+  &bank={[Current User > VendorProfile > bank_name]}
+  &tiraj={[Current Slip > Draw > name]}
+  &rows={[Current Slip > numbers_text]}
+  &w=80
+  &autoprint=1
