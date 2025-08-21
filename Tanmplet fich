@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="ht">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Fich</title>
+  <style>
+    :root{--line:#e8eef6;--ink:#0b1726;--muted:#5b6a7a}
+    *{box-sizing:border-box}body{margin:0;padding:16px;font-family:ui-sans-serif,system-ui,Arial;color:var(--ink)}
+    .wrap{max-width:420px;margin:0 auto}
+    .brand{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+    .brand img{height:28px;width:auto;border-radius:6px}
+    .kv{display:flex;justify-content:space-between;font-size:14px;margin:2px 0}
+    .muted{color:var(--muted);font-size:12px;margin-top:8px}
+    @media print {.no-print{display:none} body{padding:8px}}
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <div class="brand">
+    <img id="logo" alt="" style="display:none">
+    <strong id="company">—</strong>
+  </div>
+
+  <div class="kv"><span>Dat:</span><span id="date">—</span></div>
+  <div class="kv"><span>Tikè:</span><span id="ticket">—</span></div>
+  <div class="kv"><span>Tiraj:</span><span id="draw">—</span></div>
+
+  <div class="muted" id="contactRow" style="display:none">
+    <span id="address">—</span> · <span id="phone1">—</span><span id="sep" style="display:none"> / </span><span id="phone2">—</span>
+  </div>
+
+  <div class="no-print" style="margin-top:12px">
+    <button onclick="window.print()">🖨️ Enprime kounye a</button>
+  </div>
+</div>
+
+<script>
+  function qp(k){const u=new URL(location.href);return u.searchParams.get(k)||"";}
+
+  (function init(){
+    const company = qp('company');     // Non Antrepriz
+    const logo    = qp('logo');        // URL logo
+    const address = qp('address');     // Adrès Antrepriz
+    const phone1  = qp('phone1');      // Telefòn 1
+    const phone2  = qp('phone2');      // Telefòn 2
+    const date    = qp('date');        // Dat
+    const ticket  = qp('ticket');      // Nimewo Tikè
+    const draw    = qp('draw');        // Non Tiraj
+
+    if(company) document.getElementById('company').textContent = company;
+    if(logo){ const img = document.getElementById('logo'); img.src = logo; img.style.display = 'block'; }
+    if(date)   document.getElementById('date').textContent   = date;
+    if(ticket) document.getElementById('ticket').textContent = ticket;
+    if(draw)   document.getElementById('draw').textContent   = draw;
+
+    if(address || phone1 || phone2){
+      document.getElementById('contactRow').style.display='block';
+      if(address) document.getElementById('address').textContent = address;
+      if(phone1)  document.getElementById('phone1').textContent = phone1;
+      if(phone2){
+        document.getElementById('sep').style.display='inline';
+        document.getElementById('phone2').textContent = phone2;
+      }
+    }
+
+    // Auto-louvri print
+    setTimeout(()=>{ try{ window.print(); }catch(_){} }, 400);
+  })();
+</script>
+</body>
+</html>
